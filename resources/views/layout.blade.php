@@ -70,7 +70,7 @@
                     Master Data
                 </li>
                 <li class="nav-item">
-                    <a href="#"
+                    <a href="{{ route('pengguna') }}"
                        class="nav-link">
                         <i class="fa fa-user nav-icon" aria-hidden="true"></i>
                         <p>Pengguna</p>
@@ -91,7 +91,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#"
+                    <a href="{{ route('barang') }}"
                        class="nav-link">
                         <i class="fa fa-briefcase nav-icon" aria-hidden="true"></i>
                         <p>Barang</p>
