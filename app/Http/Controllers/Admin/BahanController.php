@@ -7,10 +7,8 @@ namespace App\Http\Controllers\Admin;
 use App\Helper\CustomController;
 use App\Models\Bahan;
 use App\Models\Barang;
-use App\Models\JenisBarang;
-use App\Models\Warna;
 
-class BarangController extends CustomController
+class BahanController extends CustomController
 {
     public function __construct()
     {
@@ -22,42 +20,27 @@ class BarangController extends CustomController
         if ($this->request->method() === 'POST' && $this->request->ajax()) {
             try {
                 $data_request = [
-                    'jenis_barang_id' => $this->postField('jenis_barang'),
-                    'bahan_id' => $this->postField('bahan'),
-                    'warna_id' => $this->postField('warna'),
-                    'nama' => $this->postField('nama'),
-                    'ukuran' => $this->postField('ukuran'),
+                    'nama' => $this->postField('name')
                 ];
-                Barang::create($data_request);
+                Bahan::create($data_request);
                 return $this->jsonResponse('success', 200);
             } catch (\Exception $e) {
                 return $this->jsonResponse('failed ' . $e->getMessage(), 500);
             }
         }
         if ($this->request->ajax()) {
-            $data = Barang::with(['jenis_barang', 'warna', 'bahan']);
+            $data = Bahan::all();
             return $this->basicDataTables($data);
         }
-        $jenis_barang = JenisBarang::all();
-        $warna = Warna::all();
-        $bahan = Bahan::all();
-        return view('barang.index')->with([
-            'jenis_barang' => $jenis_barang,
-            'warna' => $warna,
-            'bahan' => $bahan,
-        ]);
+        return view('bahan.index');
     }
 
     public function patch($id)
     {
         try {
-            $data = Barang::find($id);
+            $data = Bahan::find($id);
             $data_request = [
-                'jenis_barang_id' => $this->postField('jenis_barang'),
-                'bahan_id' => $this->postField('bahan'),
-                'warna_id' => $this->postField('warna'),
-                'nama' => $this->postField('nama'),
-                'ukuran' => $this->postField('ukuran'),
+                'nama' => $this->postField('name')
             ];
             $data->update($data_request);
             return $this->jsonResponse('success', 200);
@@ -69,7 +52,7 @@ class BarangController extends CustomController
     public function destroy($id)
     {
         try {
-            Barang::destroy($id);
+            Bahan::destroy($id);
             return $this->jsonResponse('success', 200);
         } catch (\Exception $e) {
             return $this->jsonResponse('failed', 500);

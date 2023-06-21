@@ -15,7 +15,7 @@ class CreateBarangKeluarDetail extends Migration
     {
         Schema::create('barang_keluar_detail', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('barang_keluar_id')->unsigned();
+            $table->bigInteger('barang_keluar_id')->unsigned()->nullable();
             $table->bigInteger('jenis_barang_id')->unsigned();
             $table->bigInteger('warna_id')->unsigned();
             $table->string('ukuran');

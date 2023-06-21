@@ -13,8 +13,8 @@ class Barang extends Model
 
     protected $fillable = [
         'jenis_barang_id',
+        'bahan_id',
         'warna_id',
-        'nama',
         'ukuran',
         'qty'
     ];
@@ -22,6 +22,11 @@ class Barang extends Model
     public function jenis_barang()
     {
         return $this->belongsTo(JenisBarang::class, 'jenis_barang_id');
+    }
+
+    public function bahan()
+    {
+        return $this->belongsTo(Bahan::class, 'bahan_id');
     }
 
     public function warna()

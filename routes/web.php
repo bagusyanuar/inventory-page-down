@@ -24,10 +24,22 @@ Route::group(['prefix' => 'pengguna'], function () {
     Route::post('/{id}/delete', [\App\Http\Controllers\Admin\PenggunaController::class, 'destroy'])->name('pengguna.delete');
 });
 
+Route::group(['prefix' => 'supplier'], function () {
+    Route::match(['get', 'post'], '/', [\App\Http\Controllers\Admin\SupplierController::class, 'index'])->name('supplier');
+    Route::post('/{id}', [\App\Http\Controllers\Admin\SupplierController::class, 'patch'])->name('supplier.update');
+    Route::post('/{id}/delete', [\App\Http\Controllers\Admin\SupplierController::class, 'destroy'])->name('supplier.delete');
+});
+
 Route::group(['prefix' => 'jenis-barang'], function () {
     Route::match(['get', 'post'], '/', [\App\Http\Controllers\Admin\JenisBarangController::class, 'index'])->name('jenis-barang');
     Route::post('/{id}', [\App\Http\Controllers\Admin\JenisBarangController::class, 'patch'])->name('jenis-barang.update');
     Route::post('/{id}/delete', [\App\Http\Controllers\Admin\JenisBarangController::class, 'destroy'])->name('jenis-barang.delete');
+});
+
+Route::group(['prefix' => 'bahan'], function () {
+    Route::match(['get', 'post'], '/', [\App\Http\Controllers\Admin\BahanController::class, 'index'])->name('bahan');
+    Route::post('/{id}', [\App\Http\Controllers\Admin\BahanController::class, 'patch'])->name('bahan.update');
+    Route::post('/{id}/delete', [\App\Http\Controllers\Admin\BahanController::class, 'destroy'])->name('bahan.delete');
 });
 
 Route::group(['prefix' => 'warna'], function () {

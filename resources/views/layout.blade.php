@@ -77,10 +77,24 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('supplier') }}"
+                       class="nav-link">
+                        <i class="fa fa-users nav-icon" aria-hidden="true"></i>
+                        <p>Supplier</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('jenis-barang') }}"
                        class="nav-link">
                         <i class="fa fa-archive nav-icon" aria-hidden="true"></i>
                         <p>Jenis Barang</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('bahan') }}"
+                       class="nav-link">
+                        <i class="fa fa-cube nav-icon" aria-hidden="true"></i>
+                        <p>Bahan</p>
                     </a>
                 </li>
                 <li class="nav-item">

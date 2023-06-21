@@ -2,12 +2,12 @@
 
 @section('content')
     <div class="d-flex align-items-center justify-content-between mb-3">
-        <p class="font-weight-bold mb-0" style="font-size: 20px">Halaman Warna</p>
+        <p class="font-weight-bold mb-0" style="font-size: 20px">Halaman Jenis Bahan</p>
         <ol class="breadcrumb breadcrumb-transparent mb-0">
             <li class="breadcrumb-item">
                 <a href="{{ route('dashboard') }}">Dashboard</a>
             </li>
-            <li class="breadcrumb-item active" aria-current="page">Warna
+            <li class="breadcrumb-item active" aria-current="page">Jenis Bahan
             </li>
         </ol>
     </div>
@@ -25,7 +25,7 @@
                     <thead>
                     <tr>
                         <th width="5%" class="text-center">#</th>
-                        <th>Warna</th>
+                        <th>Nama Jenis Bahan</th>
                         <th width="10%" class="text-center">Action</th>
                     </tr>
                     </thead>
@@ -41,15 +41,15 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalAddLabel">Tambah Warna</h5>
+                    <h5 class="modal-title" id="modalAddLabel">Tambah Jenis Bahan</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="w-100 mb-1">
-                        <label for="nama" class="form-label">Warna</label>
-                        <input type="text" class="form-control" id="nama" placeholder="Warna"
+                        <label for="nama" class="form-label">Nama Jenis Bahan</label>
+                        <input type="text" class="form-control" id="nama" placeholder="Nama Jenis Bahan"
                                name="nama">
                     </div>
                 </div>
@@ -66,7 +66,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalEditLabel">Edit Warna</h5>
+                    <h5 class="modal-title" id="modalEditLabel">Edit Jenis Bahan</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -74,8 +74,8 @@
                 <input type="hidden" id="id" name="id" value="">
                 <div class="modal-body">
                     <div class="w-100 mb-1">
-                        <label for="nama-edit" class="form-label">Warna</label>
-                        <input type="text" class="form-control" id="nama-edit" placeholder="Warna"
+                        <label for="nama-edit" class="form-label">Nama Jenis Bahan</label>
+                        <input type="text" class="form-control" id="nama-edit" placeholder="Nama Jenis Bahan"
                                name="nama-edit">
                     </div>
                 </div>
@@ -101,7 +101,7 @@
         }
 
         function store() {
-            let url = '{{ route('warna') }}';
+            let url = '{{ route('bahan') }}';
             let data = {
                 name: $('#nama').val()
             };
@@ -114,7 +114,7 @@
 
         function patch() {
             let id = $('#id').val();
-            let url = '{{ route('warna') }}' + '/' + id;
+            let url = '{{ route('bahan') }}' + '/' + id;
             let data = {
                 name: $('#nama-edit').val()
             };
@@ -126,7 +126,7 @@
         }
 
         function destroy(id) {
-            let url = '{{ route('warna') }}' + '/' + id + '/delete';
+            let url = '{{ route('bahan') }}' + '/' + id + '/delete';
             AjaxPost(url, {}, function () {
                 clear();
                 SuccessAlert('Berhasil!', 'Berhasil menghapus data...');
@@ -173,7 +173,7 @@
         }
 
         $(document).ready(function () {
-            table = DataTableGenerator('#table-data', '/warna', [
+            table = DataTableGenerator('#table-data', '/bahan', [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false, orderable: false},
                 {data: 'nama'},
                 {

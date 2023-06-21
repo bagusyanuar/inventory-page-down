@@ -25,11 +25,11 @@
                     <thead>
                     <tr>
                         <th width="5%" class="text-center">#</th>
-                        <th width="20%">Jenis Barang</th>
-                        <th width="13%">Warna</th>
-                        <th width="30%">Nama Barang</th>
+                        <th width="27%">Jenis Barang</th>
+                        <th width="27%">Jenis Bahan</th>
+                        <th width="15%">Warna</th>
                         <th width="12%">Ukuran</th>
-                        <th width="12%">Qty</th>
+{{--                        <th width="12%">Qty</th>--}}
                         <th width="10%" class="text-center">Action</th>
                     </tr>
                     </thead>
@@ -60,6 +60,16 @@
                             @endforeach
                         </select>
                     </div>
+
+                    <div class="form-group w-100 mb-1">
+                        <label for="jenis_barang">Jenis Bahan</label>
+                        <select class="form-control" id="jenis_bahan" name="jenis_bahan">
+                            <option value="">--pilih jenis bahan--</option>
+                            @foreach($bahan as $b)
+                                <option value="{{ $b->id }}">{{ $b->nama }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <div class="form-group w-100 mb-1">
                         <label for="warna">Warna</label>
                         <select class="form-control" id="warna" name="warna">
@@ -69,11 +79,11 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="w-100 mb-1">
-                        <label for="nama" class="form-label">Nama Barang</label>
-                        <input type="text" class="form-control" id="nama" placeholder="Nama Barang"
-                               name="nama">
-                    </div>
+{{--                    <div class="w-100 mb-1">--}}
+{{--                        <label for="nama" class="form-label">Nama Barang</label>--}}
+{{--                        <input type="text" class="form-control" id="nama" placeholder="Nama Barang"--}}
+{{--                               name="nama">--}}
+{{--                    </div>--}}
                     <div class="form-group w-100 mb-1">
                         <label for="ukuran">Ukuran</label>
                         <select class="form-control" id="ukuran" name="ukuran">
@@ -116,6 +126,15 @@
                         </select>
                     </div>
                     <div class="form-group w-100 mb-1">
+                        <label for="jenis_bahan_edit">Jenis Bahan</label>
+                        <select class="form-control" id="jenis_bahan_edit" name="jenis_bahan_edit">
+                            <option value="">--pilih jenis bahan--</option>
+                            @foreach($bahan as $b)
+                                <option value="{{ $b->id }}">{{ $b->nama }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group w-100 mb-1">
                         <label for="warna_edit">Warna</label>
                         <select class="form-control" id="warna_edit" name="warna_edit">
                             <option value="">--pilih warna--</option>
@@ -124,11 +143,11 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="w-100 mb-1">
-                        <label for="nama_edit" class="form-label">Nama Barang</label>
-                        <input type="text" class="form-control" id="nama_edit" placeholder="Nama Barang"
-                               name="nama_edit">
-                    </div>
+{{--                    <div class="w-100 mb-1">--}}
+{{--                        <label for="nama_edit" class="form-label">Nama Barang</label>--}}
+{{--                        <input type="text" class="form-control" id="nama_edit" placeholder="Nama Barang"--}}
+{{--                               name="nama_edit">--}}
+{{--                    </div>--}}
                     <div class="form-group w-100 mb-1">
                         <label for="ukuran_edit">Ukuran</label>
                         <select class="form-control" id="ukuran_edit" name="ukuran_edit">
@@ -158,10 +177,12 @@
 
         function clear() {
             $('#jenis_barang').val('');
+            $('#jenis_bahan').val('');
             $('#warna').val('');
             $('#nama').val('');
             $('#ukuran').val('S');
             $('#jenis_barang_edit').val('');
+            $('#jenis_bahan_edit').val('');
             $('#warna_edit').val('');
             $('#nama_edit').val('');
             $('#ukuran_edit').val('S');
@@ -172,6 +193,7 @@
             let url = '{{ route('barang') }}';
             let data = {
                 jenis_barang: $('#jenis_barang').val(),
+                bahan: $('#jenis_bahan').val(),
                 warna: $('#warna').val(),
                 nama: $('#nama').val(),
                 ukuran: $('#ukuran').val(),
@@ -188,6 +210,7 @@
             let url = '{{ route('barang') }}' + '/' + id;
             let data = {
                 jenis_barang: $('#jenis_barang_edit').val(),
+                bahan: $('#jenis_bahan_edit').val(),
                 warna: $('#warna_edit').val(),
                 nama: $('#nama_edit').val(),
                 ukuran: $('#ukuran_edit').val(),
@@ -217,10 +240,12 @@
                 e.preventDefault();
                 let id = this.dataset.id;
                 let jenis_barang = this.dataset.jenis;
+                let jenis_bahan = this.dataset.bahan;
                 let warna = this.dataset.warna;
                 let ukuran = this.dataset.ukuran;
                 let name = this.dataset.name;
                 $('#jenis_barang_edit').val(jenis_barang);
+                $('#jenis_bahan_edit').val(jenis_bahan);
                 $('#warna_edit').val(warna);
                 $('#ukuran_edit').val(ukuran);
                 $('#nama_edit').val(name);
@@ -256,19 +281,19 @@
             table = DataTableGenerator('#table-data', '/barang', [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false, orderable: false},
                 {data: 'jenis_barang.nama'},
+                {data: 'bahan.nama'},
                 {data: 'warna.nama'},
-                {data: 'nama'},
                 {data: 'ukuran'},
-                {data: 'qty'},
+                // {data: 'qty'},
                 {
                     data: null, render: function (data) {
-                        return '<a href="#" class="btn btn-sm btn-warning btn-edit mr-1" data-id="' + data['id'] + '" data-ukuran="' + data['ukuran'] + '" data-warna="' + data['warna_id'] + '" data-jenis="' + data['jenis_barang_id'] + '" data-name="' + data['nama'] + '"><i class="fa fa-edit f12"></i></a>' +
+                        return '<a href="#" class="btn btn-sm btn-warning btn-edit mr-1" data-id="' + data['id'] + '" data-ukuran="' + data['ukuran'] + '" data-warna="' + data['warna_id'] + '" data-jenis="' + data['jenis_barang_id'] + '" data-name="' + data['nama'] + '" data-bahan="' + data['bahan_id'] + '"><i class="fa fa-edit f12"></i></a>' +
                             '<a href="#" class="btn btn-sm btn-danger btn-delete" data-id="' + data['id'] + '"><i class="fa fa-trash f12"></i></a>';
                     }
                 },
             ], [
                 {
-                    targets: [0, 2, 4, 5, 6],
+                    targets: [0, 3, 4, 5],
                     className: 'text-center'
                 },
             ], function (d) {

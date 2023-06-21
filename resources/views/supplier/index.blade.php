@@ -2,12 +2,12 @@
 
 @section('content')
     <div class="d-flex align-items-center justify-content-between mb-3">
-        <p class="font-weight-bold mb-0" style="font-size: 20px">Halaman Warna</p>
+        <p class="font-weight-bold mb-0" style="font-size: 20px">Halaman Supplier</p>
         <ol class="breadcrumb breadcrumb-transparent mb-0">
             <li class="breadcrumb-item">
                 <a href="{{ route('dashboard') }}">Dashboard</a>
             </li>
-            <li class="breadcrumb-item active" aria-current="page">Warna
+            <li class="breadcrumb-item active" aria-current="page">Supplier
             </li>
         </ol>
     </div>
@@ -25,7 +25,9 @@
                     <thead>
                     <tr>
                         <th width="5%" class="text-center">#</th>
-                        <th>Warna</th>
+                        <th width="20%">Nama</th>
+                        <th width="15%">No. Hp</th>
+                        <th width="50%">Alamat</th>
                         <th width="10%" class="text-center">Action</th>
                     </tr>
                     </thead>
@@ -41,17 +43,28 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalAddLabel">Tambah Warna</h5>
+                    <h5 class="modal-title" id="modalAddLabel">Tambah Supplier</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="w-100 mb-1">
-                        <label for="nama" class="form-label">Warna</label>
-                        <input type="text" class="form-control" id="nama" placeholder="Warna"
+                        <label for="nama" class="form-label">Nama Supplier</label>
+                        <input type="text" class="form-control" id="nama" placeholder="Nama Supplier"
                                name="nama">
                     </div>
+                    <div class="w-100 mb-1">
+                        <label for="no_hp" class="form-label">No. Hp</label>
+                        <input type="number" class="form-control" id="no_hp" placeholder=""
+                               name="no_hp">
+                    </div>
+                    <div class="w-100 mb-1">
+                        <label for="alamat" class="form-label">Alamat</label>
+                        <textarea rows="3" class="form-control" id="alamat" placeholder=""
+                                  name="alamat"></textarea>
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
@@ -66,7 +79,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalEditLabel">Edit Warna</h5>
+                    <h5 class="modal-title" id="modalEditLabel">Edit Supplier</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -74,9 +87,19 @@
                 <input type="hidden" id="id" name="id" value="">
                 <div class="modal-body">
                     <div class="w-100 mb-1">
-                        <label for="nama-edit" class="form-label">Warna</label>
-                        <input type="text" class="form-control" id="nama-edit" placeholder="Warna"
+                        <label for="nama-edit" class="form-label">Nama Supplier</label>
+                        <input type="text" class="form-control" id="nama-edit" placeholder="Nama Supplier"
                                name="nama-edit">
+                    </div>
+                    <div class="w-100 mb-1">
+                        <label for="no_hp-edit" class="form-label">No. Hp</label>
+                        <input type="number" class="form-control" id="no_hp-edit" placeholder=""
+                               name="no_hp-edit">
+                    </div>
+                    <div class="w-100 mb-1">
+                        <label for="alamat-edit" class="form-label">Alamat</label>
+                        <textarea rows="3" class="form-control" id="alamat-edit" placeholder=""
+                                  name="alamat-edit"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -96,14 +119,20 @@
 
         function clear() {
             $('#nama').val('');
+            $('#no_hp').val('');
+            $('#alamat').val('');
             $('#nama-edit').val('');
+            $('#no_hp-edit').val('');
+            $('#alamat-edit').val('');
             $('#id').val('');
         }
 
         function store() {
-            let url = '{{ route('warna') }}';
+            let url = '{{ route('supplier') }}';
             let data = {
-                name: $('#nama').val()
+                name: $('#nama').val(),
+                no_hp: $('#no_hp').val(),
+                alamat: $('#alamat').val(),
             };
             AjaxPost(url, data, function () {
                 clear();
@@ -114,9 +143,11 @@
 
         function patch() {
             let id = $('#id').val();
-            let url = '{{ route('warna') }}' + '/' + id;
+            let url = '{{ route('supplier') }}' + '/' + id;
             let data = {
-                name: $('#nama-edit').val()
+                name: $('#nama-edit').val(),
+                no_hp: $('#no_hp-edit').val(),
+                alamat: $('#alamat-edit').val(),
             };
             AjaxPost(url, data, function () {
                 clear();
@@ -126,7 +157,7 @@
         }
 
         function destroy(id) {
-            let url = '{{ route('warna') }}' + '/' + id + '/delete';
+            let url = '{{ route('supplier') }}' + '/' + id + '/delete';
             AjaxPost(url, {}, function () {
                 clear();
                 SuccessAlert('Berhasil!', 'Berhasil menghapus data...');
@@ -143,7 +174,11 @@
                 e.preventDefault();
                 let id = this.dataset.id;
                 let name = this.dataset.name;
+                let no_hp = this.dataset.no_hp;
+                let alamat = this.dataset.alamat;
                 $('#nama-edit').val(name);
+                $('#no_hp-edit').val(no_hp);
+                $('#alamat-edit').val(alamat);
                 $('#id').val(id);
                 $('#modalEdit').modal('show');
             })
@@ -173,18 +208,20 @@
         }
 
         $(document).ready(function () {
-            table = DataTableGenerator('#table-data', '/warna', [
+            table = DataTableGenerator('#table-data', '/supplier', [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false, orderable: false},
                 {data: 'nama'},
+                {data: 'no_hp'},
+                {data: 'alamat'},
                 {
                     data: null, render: function (data) {
-                        return '<a href="#" class="btn btn-sm btn-warning btn-edit mr-1" data-id="' + data['id'] + '" data-name="' + data['nama'] + '"><i class="fa fa-edit f12"></i></a>' +
+                        return '<a href="#" class="btn btn-sm btn-warning btn-edit mr-1" data-id="' + data['id'] + '" data-name="' + data['nama'] + '" data-no_hp="' + data['no_hp'] + '" data-alamat="' + data['alamat'] + '"><i class="fa fa-edit f12"></i></a>' +
                             '<a href="#" class="btn btn-sm btn-danger btn-delete" data-id="' + data['id'] + '"><i class="fa fa-trash f12"></i></a>';
                     }
                 },
             ], [
                 {
-                    targets: [0, 2],
+                    targets: [0, 2, 4],
                     className: 'text-center'
                 },
             ], function (d) {
