@@ -6,12 +6,14 @@ namespace App\Http\Controllers\API;
 
 use App\Helper\CustomController;
 use App\Models\Barang;
+use App\Models\BarangKeluar;
+use App\Models\BarangKeluarDetail;
 use App\Models\BarangMasuk;
 use App\Models\BarangMasukDetail;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
-class BarangMasukController extends CustomController
+class BarangKeluarController extends CustomController
 {
     public function __construct()
     {
@@ -25,7 +27,7 @@ class BarangMasukController extends CustomController
             if ($this->request->method() === 'POST') {
                 return $this->checkout();
             }
-            $data = BarangMasuk::with(['supplier', 'detail.barang.jenis_barang', 'detail.barang.bahan', 'detail.barang.warna'])
+            $data = BarangKeluar::with(['detail.barang.jenis_barang', 'detail.barang.bahan', 'detail.barang.warna'])
                 ->orderBy('tanggal', 'DESC')
                 ->get();
             return $this->jsonResponse('success', 200, $data);
@@ -38,25 +40,30 @@ class BarangMasukController extends CustomController
     private function checkout()
     {
         $data = [
-            'supplier_id' => $this->postField('supplier'),
+            'nama' => $this->postField('nama'),
+            'no_hp' => $this->postField('no_hp'),
             'tanggal' => Carbon::now()->format('Y-m-d'),
-            'no_masuk' => 'BM-' . Carbon::now()->format('YmdHis'),
+            'no_keluar' => 'BK-' . Carbon::now()->format('YmdHis'),
             'keterangan' => $this->postField('keterangan')
         ];
-        $details = BarangMasukDetail::with(['barang'])
-            ->whereNull('barang_masuk_id')
+        $details = BarangKeluarDetail::with(['barang'])
+            ->whereNull('barang_keluar_id')
             ->get();
         if (count($details) <= 0) {
-            return $this->jsonResponse('tidak ada daftar barang masuk...', 500);
+            return $this->jsonResponse('tidak ada daftar barang keluar...', 500);
         }
 
-        $barangMasuk = BarangMasuk::create($data);
+        $barangKeluar = BarangKeluar::create($data);
         foreach ($details as $detail) {
             $currentQty = $detail->barang->qty;
-            $qtyIn = $detail->qty;
-            $newQty = $currentQty + $qtyIn;
+            $qtyOut = $detail->qty;
+            if ($currentQty < $qtyOut) {
+//                break;
+                return $this->jsonResponse('stok barang tidak mencukupi...', 500);
+            }
+            $newQty = $currentQty - $qtyOut;
             $detail->update([
-                'barang_masuk_id' => $barangMasuk->id
+                'barang_keluar_id' => $barangKeluar->id
             ]);
             $detail->barang->update([
                 'qty' => $newQty
@@ -66,27 +73,14 @@ class BarangMasukController extends CustomController
         return $this->jsonResponse('success', 200);
     }
 
-    public function detail($id)
-    {
-        try {
-            $data = BarangMasuk::with(['supplier', 'detail.barang.jenis_barang', 'detail.barang.bahan', 'detail.barang.warna'])
-                ->where('id', '=', $id)
-                ->first();
-            return $this->jsonResponse('success', 200, $data);
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return $this->jsonResponse('terjadi kesalahan server (' . $e->getMessage() . ')', 500);
-        }
-    }
-
     public function cart()
     {
         try {
             if ($this->request->method() === 'POST') {
                 return $this->addCart();
             }
-            $data = BarangMasukDetail::with(['barang.jenis_barang', 'barang.bahan', 'barang.warna'])
-                ->whereNull('barang_masuk_id')
+            $data = BarangKeluarDetail::with(['barang.jenis_barang', 'barang.bahan', 'barang.warna'])
+                ->whereNull('barang_keluar_id')
                 ->get();
             return $this->jsonResponse('success', 200, $data);
         } catch (\Exception $e) {
@@ -105,12 +99,18 @@ class BarangMasukController extends CustomController
         if (!$barang) {
             return $this->jsonResponse('master barang tidak ditemukan....', 404);
         }
+
+        $currentQty = $barang->qty;
+        $qtyOut = (int) $this->postField('qty');
+        if ($currentQty < $qtyOut) {
+            return $this->jsonResponse('stok barang tidak mencukupi...', 500);
+        }
         $data = [
-            'barang_masuk_id' => null,
+            'barang_keluar_id' => null,
             'barang_id' => $barang->id,
-            'qty' => (int)$this->postField('qty')
+            'qty' => $qtyOut
         ];
-        BarangMasukDetail::create($data);
+        BarangKeluarDetail::create($data);
         return $this->jsonResponse('success', 200);
     }
 }

@@ -53,3 +53,18 @@ Route::group(['prefix' => 'barang'], function () {
     Route::post('/{id}', [\App\Http\Controllers\Admin\BarangController::class, 'patch'])->name('barang.update');
     Route::post('/{id}/delete', [\App\Http\Controllers\Admin\BarangController::class, 'destroy'])->name('barang.delete');
 });
+
+Route::group(['prefix' => 'laporan-stok'], function () {
+    Route::get( '/', [\App\Http\Controllers\Admin\LaporanStokController::class, 'index'])->name('laporan-stok');
+    Route::get( '/cetak', [\App\Http\Controllers\Admin\LaporanStokController::class, 'cetak'])->name('laporan-stok.cetak');
+});
+
+Route::group(['prefix' => 'laporan-barang-masuk'], function () {
+    Route::get( '/', [\App\Http\Controllers\Admin\LaporanBarangMasukController::class, 'index'])->name('laporan-barang-masuk');
+    Route::get( '/cetak', [\App\Http\Controllers\Admin\LaporanBarangMasukController::class, 'cetak'])->name('laporan-barang-masuk.cetak');
+});
+
+Route::group(['prefix' => 'laporan-barang-keluar'], function () {
+    Route::get( '/', [\App\Http\Controllers\Admin\LaporanBarangKeluarController::class, 'index'])->name('laporan-barang-keluar');
+    Route::get( '/cetak', [\App\Http\Controllers\Admin\LaporanBarangKeluarController::class, 'cetak'])->name('laporan-barang-keluar.cetak');
+});

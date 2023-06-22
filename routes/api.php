@@ -33,4 +33,10 @@ Route::group(['middleware' => ['jwt.verify']], function () {
         Route::match(['post', 'get'], '/cart', [\App\Http\Controllers\API\BarangMasukController::class, 'cart']);
     });
 
+    Route::group(['prefix' => 'barang-keluar'], function () {
+        Route::match(['post', 'get'], '/', [\App\Http\Controllers\API\BarangKeluarController::class, 'index']);
+        Route::get('/{id}/detail', [\App\Http\Controllers\API\BarangKeluarController::class, 'detail']);
+        Route::match(['post', 'get'], '/cart', [\App\Http\Controllers\API\BarangKeluarController::class, 'cart']);
+    });
+
 });

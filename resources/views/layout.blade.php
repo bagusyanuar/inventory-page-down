@@ -111,44 +111,44 @@
                         <p>Barang</p>
                     </a>
                 </li>
+{{--                <li class="nav-header" style="padding: 0.5rem 1rem 0.5rem 1rem;">--}}
+{{--                    Transaksi--}}
+{{--                </li>--}}
+{{--                <li class="nav-item">--}}
+{{--                    <a href="#"--}}
+{{--                       class="nav-link">--}}
+{{--                        <i class="fa fa-inbox nav-icon" aria-hidden="true"></i>--}}
+{{--                        <p>Barang Masuk</p>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+{{--                <li class="nav-item">--}}
+{{--                    <a href="#"--}}
+{{--                       class="nav-link">--}}
+{{--                        <i class="fa fa-shopping-bag nav-icon" aria-hidden="true"></i>--}}
+{{--                        <p>Barang Keluar</p>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
                 <li class="nav-header" style="padding: 0.5rem 1rem 0.5rem 1rem;">
-                    Transaksi
+                    Laporan
                 </li>
                 <li class="nav-item">
-                    <a href="#"
-                       class="nav-link">
-                        <i class="fa fa-inbox nav-icon" aria-hidden="true"></i>
-                        <p>Barang Masuk</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#"
-                       class="nav-link">
-                        <i class="fa fa-shopping-bag nav-icon" aria-hidden="true"></i>
-                        <p>Barang Keluar</p>
-                    </a>
-                </li>
-                <li class="nav-header" style="padding: 0.5rem 1rem 0.5rem 1rem;">
-                    Transaksi
-                </li>
-                <li class="nav-item">
-                    <a href="#"
+                    <a href="{{ route('laporan-stok') }}"
                        class="nav-link">
                         <i class="fa fa-cubes nav-icon" aria-hidden="true"></i>
                         <p>Stok</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#"
+                    <a href="{{ route('laporan-barang-masuk') }}"
                        class="nav-link">
-                        <i class="fa fa-sticky-note nav-icon" aria-hidden="true"></i>
+                        <i class="fa fa-inbox nav-icon" aria-hidden="true"></i>
                         <p>Barang Masuk</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#"
+                    <a href="{{ route('laporan-barang-keluar') }}"
                        class="nav-link">
-                        <i class="fa fa-sticky-note nav-icon" aria-hidden="true"></i>
+                        <i class="fa fa-shopping-bag nav-icon" aria-hidden="true"></i>
                         <p>Barang Keluar</p>
                     </a>
                 </li>

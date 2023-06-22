@@ -19,7 +19,7 @@ class BarangKeluarDetail extends Model
 
     public function barang_keluar()
     {
-        return $this->belongsTo(BarangKeluar::class, 'barang_keluar');
+        return $this->belongsTo(BarangKeluar::class, 'barang_keluar_id');
     }
 
     public function barang()
