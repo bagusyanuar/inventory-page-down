@@ -22,6 +22,7 @@ Route::post('/login', [\App\Http\Controllers\API\AuthController::class, 'login']
 
 Route::group(['middleware' => ['jwt.verify']], function () {
 
+    Route::match(['post', 'get'], '/supplier', [\App\Http\Controllers\API\SupplierController::class, 'index']);
     Route::match(['post', 'get'], '/jenis-barang', [\App\Http\Controllers\API\JenisBarangController::class, 'index']);
     Route::match(['post', 'get'], '/bahan', [\App\Http\Controllers\API\BahanController::class, 'index']);
     Route::match(['post', 'get'], '/warna', [\App\Http\Controllers\API\WarnaController::class, 'index']);
