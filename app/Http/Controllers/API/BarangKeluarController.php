@@ -29,7 +29,20 @@ class BarangKeluarController extends CustomController
             }
             $data = BarangKeluar::with(['detail.barang.jenis_barang', 'detail.barang.bahan', 'detail.barang.warna'])
                 ->orderBy('tanggal', 'DESC')
-                ->get();
+                ->get()->append(['sum_qty']);
+            return $this->jsonResponse('success', 200, $data);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return $this->jsonResponse('terjadi kesalahan server (' . $e->getMessage() . ')', 500);
+        }
+    }
+
+    public function detail($id)
+    {
+        try {
+            $data = BarangKeluar::with(['detail.barang.jenis_barang', 'detail.barang.bahan', 'detail.barang.warna'])
+                ->where('id', '=', $id)
+                ->first()->append(['sum_qty']);
             return $this->jsonResponse('success', 200, $data);
         } catch (\Exception $e) {
             DB::rollBack();

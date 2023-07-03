@@ -23,4 +23,10 @@ class BarangKeluar extends Model
     {
         return $this->hasMany(BarangKeluarDetail::class, 'barang_keluar_id');
     }
+
+    public function getSumQtyAttribute()
+    {
+        $details = $this->detail()->get();
+        return $details->sum('qty');
+    }
 }
