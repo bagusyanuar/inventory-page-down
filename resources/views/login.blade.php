@@ -49,7 +49,7 @@
 @endif
 <div class="row full-height">
     <div class="col-lg-7 col-md-6 p-0 left-panel d-flex align-items-center justify-content-center">
-
+        <img src="{{ asset('/assets/hero.png') }}" height="250" alt="hero">
     </div>
     <div class="col-lg-5 col-md-6 pl-5 pr-5 right-panel d-flex align-items-center justify-content-center">
         <div class="text-center">

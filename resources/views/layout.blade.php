@@ -54,7 +54,7 @@
                 <img src="{{ asset('/assets/user.png') }}" class="img-circle" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block" style="font-size: 14px;">Admin</a>
+                <a href="#" class="d-block" style="font-size: 14px;">{{ auth()->user()->username }}</a>
             </div>
         </div>
         <nav class="mt-2">
@@ -69,65 +69,69 @@
                 <li class="nav-header" style="padding: 0.5rem 1rem 0.5rem 1rem;">
                     Master Data
                 </li>
-                <li class="nav-item">
-                    <a href="{{ route('pengguna') }}"
-                       class="nav-link">
-                        <i class="fa fa-user nav-icon" aria-hidden="true"></i>
-                        <p>Pengguna</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('supplier') }}"
-                       class="nav-link">
-                        <i class="fa fa-users nav-icon" aria-hidden="true"></i>
-                        <p>Supplier</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('jenis-barang') }}"
-                       class="nav-link">
-                        <i class="fa fa-archive nav-icon" aria-hidden="true"></i>
-                        <p>Jenis Barang</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('bahan') }}"
-                       class="nav-link">
-                        <i class="fa fa-cube nav-icon" aria-hidden="true"></i>
-                        <p>Bahan</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('warna') }}"
-                       class="nav-link">
-                        <i class="fa fa-tags nav-icon" aria-hidden="true"></i>
-                        <p>Warna</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('barang') }}"
-                       class="nav-link">
-                        <i class="fa fa-briefcase nav-icon" aria-hidden="true"></i>
-                        <p>Barang</p>
-                    </a>
-                </li>
-{{--                <li class="nav-header" style="padding: 0.5rem 1rem 0.5rem 1rem;">--}}
-{{--                    Transaksi--}}
-{{--                </li>--}}
-{{--                <li class="nav-item">--}}
-{{--                    <a href="#"--}}
-{{--                       class="nav-link">--}}
-{{--                        <i class="fa fa-inbox nav-icon" aria-hidden="true"></i>--}}
-{{--                        <p>Barang Masuk</p>--}}
-{{--                    </a>--}}
-{{--                </li>--}}
-{{--                <li class="nav-item">--}}
-{{--                    <a href="#"--}}
-{{--                       class="nav-link">--}}
-{{--                        <i class="fa fa-shopping-bag nav-icon" aria-hidden="true"></i>--}}
-{{--                        <p>Barang Keluar</p>--}}
-{{--                    </a>--}}
-{{--                </li>--}}
+                @if(auth()->user()->role === 'pimpinan')
+                    <li class="nav-item">
+                        <a href="{{ route('pengguna') }}"
+                           class="nav-link">
+                            <i class="fa fa-user nav-icon" aria-hidden="true"></i>
+                            <p>Pengguna</p>
+                        </a>
+                    </li>
+                @endif
+                @if(auth()->user()->role === 'admin')
+                    <li class="nav-item">
+                        <a href="{{ route('supplier') }}"
+                           class="nav-link">
+                            <i class="fa fa-users nav-icon" aria-hidden="true"></i>
+                            <p>Supplier</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('jenis-barang') }}"
+                           class="nav-link">
+                            <i class="fa fa-archive nav-icon" aria-hidden="true"></i>
+                            <p>Jenis Barang</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('bahan') }}"
+                           class="nav-link">
+                            <i class="fa fa-cube nav-icon" aria-hidden="true"></i>
+                            <p>Bahan</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('warna') }}"
+                           class="nav-link">
+                            <i class="fa fa-tags nav-icon" aria-hidden="true"></i>
+                            <p>Warna</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('barang') }}"
+                           class="nav-link">
+                            <i class="fa fa-briefcase nav-icon" aria-hidden="true"></i>
+                            <p>Barang</p>
+                        </a>
+                    </li>
+                @endif
+                {{--                <li class="nav-header" style="padding: 0.5rem 1rem 0.5rem 1rem;">--}}
+                {{--                    Transaksi--}}
+                {{--                </li>--}}
+                {{--                <li class="nav-item">--}}
+                {{--                    <a href="#"--}}
+                {{--                       class="nav-link">--}}
+                {{--                        <i class="fa fa-inbox nav-icon" aria-hidden="true"></i>--}}
+                {{--                        <p>Barang Masuk</p>--}}
+                {{--                    </a>--}}
+                {{--                </li>--}}
+                {{--                <li class="nav-item">--}}
+                {{--                    <a href="#"--}}
+                {{--                       class="nav-link">--}}
+                {{--                        <i class="fa fa-shopping-bag nav-icon" aria-hidden="true"></i>--}}
+                {{--                        <p>Barang Keluar</p>--}}
+                {{--                    </a>--}}
+                {{--                </li>--}}
                 <li class="nav-header" style="padding: 0.5rem 1rem 0.5rem 1rem;">
                     Laporan
                 </li>
@@ -154,28 +158,28 @@
                 </li>
             </ul>
         </nav>
-{{--        <div class="my-sidebar-menu">--}}
-{{--        <nav class="mt-2">--}}
+        {{--        <div class="my-sidebar-menu">--}}
+        {{--        <nav class="mt-2">--}}
 
 
-{{--            <ul class="nav nav-sidebar nav-pills flex-column">--}}
-{{--                <nav class="mt-2 nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"--}}
-{{--                     data-accordion="false">--}}
+        {{--            <ul class="nav nav-sidebar nav-pills flex-column">--}}
+        {{--                <nav class="mt-2 nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"--}}
+        {{--                     data-accordion="false">--}}
 
-{{--                    <li class="nav-header" style="padding: 0.5rem 1rem 0.5rem 1rem;">--}}
-{{--                        Master Data--}}
-{{--                    </li>--}}
-{{--                    <li class="nav-item">--}}
-{{--                        <a href="#"--}}
-{{--                           class="nav-link">--}}
-{{--                            <i class="fa fa-user nav-icon" aria-hidden="true"></i>--}}
-{{--                            <p>Admin</p>--}}
-{{--                        </a>--}}
-{{--                    </li>--}}
-{{--                </nav>--}}
-{{--            </ul>--}}
-{{--        </nav>--}}
-{{--        </div>--}}
+        {{--                    <li class="nav-header" style="padding: 0.5rem 1rem 0.5rem 1rem;">--}}
+        {{--                        Master Data--}}
+        {{--                    </li>--}}
+        {{--                    <li class="nav-item">--}}
+        {{--                        <a href="#"--}}
+        {{--                           class="nav-link">--}}
+        {{--                            <i class="fa fa-user nav-icon" aria-hidden="true"></i>--}}
+        {{--                            <p>Admin</p>--}}
+        {{--                        </a>--}}
+        {{--                    </li>--}}
+        {{--                </nav>--}}
+        {{--            </ul>--}}
+        {{--        </nav>--}}
+        {{--        </div>--}}
     </div>
 </aside>
 <div class="content-wrapper p-3">
